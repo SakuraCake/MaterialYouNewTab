@@ -165,7 +165,7 @@ const en = {
     "redditEngine": "Reddit",
     "wikipediaEngine": "Wikipedia",
     "quoraEngine": "Quora",
-    "articleEngine": "文章",
+
 
     // AI Tools
     "ai_tools": "AI Tools",
@@ -209,6 +209,8 @@ const en = {
     "firefoxThemeInfo": "Visit <a href=\"https://addons.mozilla.org/firefox/themes/\" target=\"_blank\">Firefox Themes</a>, download and apply the theme that matches the extension.",
     "updateFirefoxHomepage": "Update Homepage",
     "updateFirefoxHomepageInfo": "To change your homepage like the new tab as well, visit <a href=\"https://github.com/prem-k-r/MaterialYouNewTab#-firefox\" target=\"_blank\">this link</a> and follow the instructions.",
+    "welcomeTipTitle": "Welcome",
+    "welcomeTipDesc": "Welcome to KonoSite, an elegant personal homepage. Use the menu on the right to customize themes, manage bookmarks, and explore projects.",
     "dontShowTips": "Don't show it again",
 
     // Footer Toast

@@ -150,7 +150,7 @@ const zh = {
     "redditEngine": "Reddit",
     "wikipediaEngine": "维基百科",
     "quoraEngine": "Quora",
-    "articleEngine": "文章",
+
 
     // AI Tools
     "ai_tools": "AI工具",
@@ -191,6 +191,8 @@ const zh = {
     "firefoxThemeInfo": "访问 <a href=\"https://addons.mozilla.org/firefox/themes/\" target=\"_blank\">Firefox主题</a>下载匹配主题",
     "updateFirefoxHomepage": "更新主页",
     "updateFirefoxHomepageInfo": "<a href=\"https://github.com/prem-k-r/MaterialYouNewTab#-firefox\" target=\"_blank\">点击此处</a>查看主页设置指南",
+    "welcomeTipTitle": "欢迎",
+    "welcomeTipDesc": "欢迎来到 KonoSite，一个优雅的个人主页。你可以在右侧菜单中自定义主题、管理书签、查看项目等。",
     "dontShowTips": "不再显示",
 
     // Dialog boxes (alerts)

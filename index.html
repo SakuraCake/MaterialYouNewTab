@@ -744,13 +744,6 @@ Copyright (c) 2026 SakuraCake
                                 <span class="engine-name" id="quoraEngineDD">Quora</span>
                             </div>
 
-                            <div data-engine="10" data-engine-name="article" id="article-dropdown" class="dropdown-item">
-                                <svg width="30" height="30">
-                                    <use href="#article-engine-icon" />
-                                </svg>
-                                <span class="engine-name" id="articleEngineDD">文章</span>
-                            </div>
-
                         </div>
                     </div>
                 </div>
@@ -845,12 +838,6 @@ Copyright (c) 2026 SakuraCake
                 </symbol>
             </svg>
 
-            <svg style="display: none;">
-                <symbol id="article-engine-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 3h10l5 5v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm9 1v4h4M7 12h10M7 16h6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                </symbol>
-            </svg>
-
             <!-- ----------search with------------------- -->
             <div class="searchWithCont" style="visibility: hidden;" id="search-with-container">
 
@@ -896,14 +883,6 @@ Copyright (c) 2026 SakuraCake
                         </svg>
                         <label class="engine-name" id="braveEngine">Brave</label>
                         <input class="radio-button" name="search-engine" type="radio" value="engine4">
-                    </div>
-
-                    <div class="search-engine bgLightTint" data-category="search-with">
-                        <svg width="30" height="30" class="search-engine-icon">
-                            <use href="#article-engine-icon" />
-                        </svg>
-                        <label class="engine-name" id="articleEngine">文章</label>
-                        <input class="radio-button" name="search-engine" type="radio" value="engine10">
                     </div>
 
                     <div class="search-engine bgLightTint" data-category="search-on">
@@ -1847,42 +1826,12 @@ Copyright (c) 2026 SakuraCake
                     <div class="tips" id="tips">
                         <div class="ttcont">
                             <div class="texts">
-                                <div class="bigText" id="switchSearchModes">Switch Search Modes</div>
-                                <div class="infoText" id="switchSearchModesInfo">Click on ‘Search With’ to
-                                    change the mode.</div>
+                                <div class="bigText" id="welcomeTipTitle">欢迎</div>
+                                <div class="infoText" id="welcomeTipDesc">欢迎来到 KonoSite，一个优雅的个人主页。你可以在右侧菜单中自定义主题、管理书签、查看项目等。</div>
                             </div>
                         </div>
 
-                        <div class="ttcont hideOnMobile">
-                            <div class="texts">
-                                <div class="bigText" id="adjustZoom">Adjust Zoom</div>
-                                <div class="infoText" id="adjustZoomInfo">Press Ctrl + "+" or Ctrl + "-" to
-                                    adjust the zoom.</div>
-                            </div>
-                        </div>
-
-                        <div class="ttcont hideOnMobile">
-                            <div class="texts">
-                                <div class="bigText" id="changeBrowserTheme">Change Browser Theme</div>
-                                <div class="infoText" id="changeBrowserThemeInfo">Click the three dots (⋮) >
-                                    More tools > Customize Chrome, then choose a color that matches the extension
-                                    theme.
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="ttcont hideOnMobile" id="firefoxHomepage" style="display: none;">
-                            <div class="texts">
-                                <div class="bigText" id="updateFirefoxHomepage">Update Homepage</div>
-                                <div class="infoText" id="updateFirefoxHomepageInfo">To change your homepage
-                                    like the new tab as well, visit <a
-                                        href="https://github.com/prem-k-r/MaterialYouNewTab#-firefox"
-                                        target="_blank">this link</a> and follow the instructions.
-                                </div>
-                            </div>
-                        </div>
-
-                        <button id="dontShowTips">Don't show it again</button>
+                        <button id="dontShowTips">不再显示</button>
                     </div>
 
                     <!-- ----------end of tips----- -->

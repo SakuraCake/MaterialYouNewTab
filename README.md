@@ -10,7 +10,7 @@ Forked from [Material You NewTab](https://github.com/prem-k-r/MaterialYouNewTab)
 
 ## Features
 
-- **Search** — Google, Bing, DuckDuckGo, YouTube, Wikipedia, Medium article search, and more
+- **Search** — Google, Bing, DuckDuckGo, YouTube, Wikipedia, and more
 - **一言 quotes** — Hitokoto API integration with category and interval settings
 - **Bookmarks** — localStorage-based bookmark manager with add/edit/delete
 - **Projects** — Auto-fetches your GitHub repos

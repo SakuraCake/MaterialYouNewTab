@@ -22,7 +22,6 @@ const searchQueryURLs = {
     engine7: "https://www.reddit.com/search/?q=",
     engine8: `https://${languageCode}.wikipedia.org/wiki/Special:Search?search=`,
     engine9: "https://www.quora.com/search?q=",
-    engine10: "https://medium.com/search?q="
 };
 
 // Showing border or outline when you click on the searchbar
@@ -64,7 +63,7 @@ searchWith.addEventListener("click", function (event) {
 
 function toggleSearchEngines(category) {
     const defaultItems = {
-        "search-with": "engine10",
+        "search-with": "engine5",
         "search-on": "engine5",
     };
     const checkeditem = localStorage.getItem(`selectedSearchEngine-${category}`) || defaultItems[category];
@@ -239,7 +238,7 @@ const storedSearchEngine = localStorage.getItem(`selectedSearchEngine-${activeSe
 
 toggleSearchEngines(activeSearchMode);
 
-const defaultFallback = activeSearchMode === "search-with" ? "engine10" : "engine5";
+const defaultFallback = "engine5";
 const currentEngine = storedSearchEngine || defaultFallback;
 if (currentEngine) {
     const currentEngineSN = currentEngine.charAt(currentEngine.length - 1);

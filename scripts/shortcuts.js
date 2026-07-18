@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Loads all settings from localStorage and applies them
     function loadSettings() {
         const savedShortcuts = localStorage.getItem("shortcutsCheckboxState");
-        dom.shortcutsCheckbox.checked = savedShortcuts ? savedShortcuts === "checked" : true;
+        dom.shortcutsCheckbox.checked = savedShortcuts ? savedShortcuts === "checked" : false;
         loadCheckboxState("adaptiveIconToggle", dom.adaptiveIconToggle);
         loadActiveStatus("shortcutEditField", dom.shortcutEditField);
         loadActiveStatus("adaptiveIconField", dom.adaptiveIconField);

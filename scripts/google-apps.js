@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     const savedSocial = localStorage.getItem("googleAppsCheckboxState");
-    googleAppsCheckbox.checked = savedSocial ? savedSocial === "checked" : true;
+    googleAppsCheckbox.checked = savedSocial ? savedSocial === "checked" : false;
     const savedDisplay = localStorage.getItem("googleAppsDisplayStatus");
     googleAppsCont.style.display = savedDisplay || (googleAppsCheckbox.checked ? "flex" : "none");
 });

@@ -16,6 +16,10 @@
             --text: #1b3041;
             --accent: #4382ec;
         }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
         body {
             font-family: var(--main-font-family);
             background: var(--bg);
@@ -23,8 +27,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
-            min-height: 100vh;
             padding: 20px;
             user-select: none;
             transition: background 0.3s, color 0.3s;
