@@ -1,6 +1,6 @@
 // English (Default)
 const en = {
-    "newTabTitle": "New Tab",
+    "newTabTitle": "KonoSite",
     // Menu Items
     "github": "GitHub",
     "feedback": "Feedback",
@@ -22,15 +22,15 @@ const en = {
     "editShortcutsListInfo": "You can add new shortcuts by clicking the \"+\" icon or edit existing ones by clicking on the shortcut name or URL.\nTo reset a custom icon, simply clear the image URL.",
     "adaptiveIconText": "Adaptive Icons",
     "adaptiveIconInfoText": "Shortcut icons will adapt to theme",
-    "bookmarksText": "Bookmarks",
-    "bookmarksInfo": "Show bookmarks sidebar",
+    "bookmarksText": "Personal Links",
+    "bookmarksInfo": "Show personal links & friend links",
     "ai_tools_button": "AI Tools",
     "enable_ai_tools": "Show shortcuts for AI tools",
     "aiToolsSettingsText": "AI Tools Settings",
     "aiToolsSettingsInfo": "Manage AI tools shortcuts",
-    "googleAppsMenuText": "Google Apps",
-    "googleAppsMenuInfo": "Show shortcuts for Google Apps",
-    "googleAppsHover": "Google Apps",    // Keep this shorter
+    "googleAppsMenuText": "Social Links",
+    "googleAppsMenuInfo": "Show social media links",
+    "googleAppsHover": "Social Links",
 
     "shortcutDefaultName": "New Shortcut",
     "shortcutInputName": "Shortcut Name",
@@ -55,8 +55,6 @@ const en = {
     "greetinginfo": "Show greeting below custom text",
 
     // Misc
-    "userTextTitle": "Customizable Text",
-    "userTextInfo": "Show custom text below the clock",
     "fahrenheitCelsiusCheckbox": "Switch to Fahrenheit",
     "fahrenheitCelsiusText": "Refresh the page to apply changes",
     "hideWeatherTitle": "Hide Weather",
@@ -71,10 +69,29 @@ const en = {
     "micIconInfo": "If voice typing is not working",
     "hideSearchWith": "Hide Search Engines",
     "hideSearchWithInfo": "Switch between search engines by clicking its icon",
-    "motivationalQuotesText": "Motivational Quotes",
-    "motivationalQuotesInfo": "Show quotes below the searchbar",
-    "newQuoteOnRefreshText": "Daily Quote",
-    "newQuoteOnRefreshInfo": "Show one quote per day instead of refreshing each time",
+    "motivationalQuotesText": "一言",
+    "motivationalQuotesInfo": "Show a random quote below the searchbar",
+    "hitokotoCategoryText": "Quote Type",
+    "hitokotoCategoryInfo": "Filter quotes by category",
+    "hitokotoIntervalText": "Refresh Interval",
+    "hitokotoIntervalInfo": "How often to change the quote",
+    "hitokotoTypeAll": "Random",
+    "hitokotoTypeA": "Anime",
+    "hitokotoTypeB": "Comics",
+    "hitokotoTypeC": "Games",
+    "hitokotoTypeD": "Literature",
+    "hitokotoTypeE": "Original",
+    "hitokotoTypeF": "Internet",
+    "hitokotoTypeG": "Other",
+    "hitokotoTypeH": "Movies & TV",
+    "hitokotoTypeI": "Poetry",
+    "hitokotoTypeJ": "NetEase Music",
+    "hitokotoTypeK": "Philosophy",
+    "hitokotoTypeL": "Witty",
+    "hitokotoIntervalLoad": "Every Open",
+    "hitokotoIntervalHourly": "Hourly",
+    "hitokotoIntervalDaily": "Daily",
+    "hitokotoIntervalWeekly": "Weekly",
     "search_suggestions_button": "Search Suggestions",
     "search_suggestions_text": "Enable search suggestions",
 
@@ -129,7 +146,6 @@ const en = {
     "listenPlaceholder": "Listening...",
     "searchWithHint": "Search With",
     "searchOnHint": "Search On",
-    "userText": "Click here to edit",
 
     // Greeting
     greeting: {
@@ -149,6 +165,7 @@ const en = {
     "redditEngine": "Reddit",
     "wikipediaEngine": "Wikipedia",
     "quoraEngine": "Quora",
+    "articleEngine": "文章",
 
     // AI Tools
     "ai_tools": "AI Tools",

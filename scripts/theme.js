@@ -1,6 +1,8 @@
 /*
  * Material You NewTab
- * Copyright (c) 2023-2025 XengShi
+ * Copyright (c) 2024-2026 Prem, 2023-2025 XengShi
+ * Copyright (c) 2026 SakuraCake
+ * Modified by SakuraCake for SakuraKono
  * Licensed under the GNU General Public License v3.0 (GPL-3.0)
  */
 
@@ -290,3 +292,4 @@ const throttle = (func, limit) => {
 // Add listeners for color picker
 colorPicker.removeEventListener("input", handleColorPickerChange); // Ensure no duplicate listeners
 colorPicker.addEventListener("input", throttle(handleColorPickerChange, 10));
+

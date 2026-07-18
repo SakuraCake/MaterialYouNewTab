@@ -1,6 +1,8 @@
 /* 
  * Material You NewTab
- * Copyright (c) 2023-2025 XengShi
+ * Copyright (c) 2024-2026 Prem, 2023-2025 XengShi
+ * Copyright (c) 2026 SakuraCake
+ * Modified by SakuraCake for SakuraKono
  * Licensed under the GNU General Public License v3.0 (GPL-3.0)
  * You should have received a copy of the GNU General Public License along with this program. 
  * If not, see <https://www.gnu.org/licenses/>.
@@ -30,10 +32,58 @@ const sortTimeAdded = document.getElementById("sortTimeAdded");
 let currentSortMethod = localStorage.getItem("bookmarkSortMethod") || 'title';
 
 var bookmarksAPI;
-if (isFirefox) {
+if (typeof browser !== 'undefined' && browser.bookmarks) {
     bookmarksAPI = browser.bookmarks;
-} else if (isChromiumBased) {
+} else if (typeof chrome !== 'undefined' && chrome.bookmarks && chrome.bookmarks.getTree) {
     bookmarksAPI = chrome.bookmarks;
+} else {
+    // Standalone mode: localStorage-based bookmarks
+    bookmarksAPI = createLocalBookmarksAPI();
+}
+
+function createLocalBookmarksAPI() {
+    let nextId = Date.now();
+    function getLinks() {
+        try { return JSON.parse(localStorage.getItem("personalLinks") || "[]"); }
+        catch { return []; }
+    }
+    function saveLinks(links) {
+        localStorage.setItem("personalLinks", JSON.stringify(links));
+    }
+    function toNodes(links) {
+        return links.map(l => ({ id: l.id, title: l.title, url: l.url, dateAdded: l.dateAdded }));
+    }
+    return {
+        getTree() {
+            const links = getLinks();
+            return Promise.resolve([{
+                id: "0", title: "root",
+                children: links.length > 0 ? toNodes(links) : undefined
+            }]);
+        },
+        getRecent(count) {
+            const links = [...getLinks()].sort((a, b) => (b.dateAdded || 0) - (a.dateAdded || 0));
+            return Promise.resolve(toNodes(links.slice(0, count)));
+        },
+        create(data) {
+            const links = getLinks();
+            const id = "local_" + (nextId++);
+            const bookmark = { id, title: data.title || "", url: data.url || "", dateAdded: Date.now() };
+            links.push(bookmark);
+            saveLinks(links);
+            return Promise.resolve(bookmark);
+        },
+        remove(id) {
+            saveLinks(getLinks().filter(l => l.id !== id));
+            return Promise.resolve();
+        },
+        update(id, data) {
+            const links = getLinks();
+            const idx = links.findIndex(l => l.id === id);
+            if (idx !== -1) { links[idx].title = data.title; links[idx].url = data.url; saveLinks(links); }
+            return Promise.resolve();
+        }
+    };
 }
 
 // Initialize sort buttons
@@ -170,44 +220,10 @@ function updateBookmarkUI(enabled) {
 }
 
 async function verifyBookmarkPermission() {
-    // Early exit for unsupported browsers
-    let bookmarksPermission;
-    if (isFirefox) bookmarksPermission = browser.permissions;
-    else if (isChromiumBased) bookmarksPermission = chrome.permissions;
-
-    if (!bookmarksPermission) {
-        await alertPrompt(translations[currentLanguage]?.UnsupportedBrowser ||
-            translations['en'].UnsupportedBrowser);
+    if (!bookmarksAPI) {
         updateBookmarkUI(false);
         return false;
     }
-
-    // Firefox always has permission
-    if (isFirefox) {
-        updateBookmarkUI(true);
-        return true;
-    }
-
-    // Chromium-based browsers
-    // Opera doesn't have favicon permission yet
-    const requiredPermissions = isOpera ? ["bookmarks"] : ["bookmarks", "favicon"];
-
-    const hasPermission = await new Promise(resolve =>
-        chrome.permissions.contains({ permissions: requiredPermissions }, resolve));
-
-    if (!hasPermission) {
-        const granted = await new Promise(resolve =>
-            chrome.permissions.request({ permissions: requiredPermissions }, resolve));
-
-        if (!granted) {
-            updateBookmarkUI(false);
-            return false;
-        }
-        bookmarksAPI = chrome.bookmarks; // Initialize if just granted
-    }
-
-    // Success case
-    updateBookmarkUI(true);
     return true;
 }
 
@@ -290,17 +306,16 @@ function loadBookmarks() {
 
 // Function to set the favicon for a bookmark
 function setBookmarkFavicon(faviconElement, pageUrl) {
-    // Final fallback to local offline icon
     const offlineFallback = () => faviconElement.src = "./svgs/offline.svg";
-
-    // Google favicon api fallback
     const googleFallback = () => {
-        faviconElement.src = `https://www.google.com/s2/favicons?domain=${new URL(pageUrl).hostname}&sz=32`;
+        try {
+            faviconElement.src = `https://www.google.com/s2/favicons?domain=${new URL(pageUrl).hostname}&sz=32`;
+        } catch { faviconElement.src = "./svgs/offline.svg"; }
         faviconElement.onerror = offlineFallback;
     };
 
-    // Try browser-specific favicon first (Chromium only)
-    if (!isFirefox || !isOpera) {
+    const hasChromeRuntime = typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.id;
+    if (hasChromeRuntime && !isFirefox) {
         faviconElement.src = `chrome-extension://${chrome.runtime.id}/_favicon/?pageUrl=${encodeURIComponent(pageUrl)}&size=32`;
         faviconElement.onerror = googleFallback;
     } else {
@@ -383,18 +398,14 @@ function displayBookmarks(bookmarkNodes) {
                     .replace("{title}", node.title || node.url);
 
                 if (await confirmPrompt(confirmMessage)) {
-                    if (isFirefox) {
-                        // Firefox API (Promise-based)
-                        bookmarksAPI.remove(node.id).then(() => {
-                            item.remove(); // Remove the item from the DOM
-                        }).catch(err => {
-                            console.error("Error removing bookmark:", err);
-                        });
-                    } else {
-                        // Chrome API (Callback-based)
-                        bookmarksAPI.remove(node.id, function () {
-                            item.remove(); // Remove the item from the DOM
-                        });
+                    try {
+                        const result = bookmarksAPI.remove(node.id);
+                        if (result && typeof result.then === 'function') {
+                            await result;
+                        }
+                        item.remove();
+                    } catch (err) {
+                        console.error("Error removing bookmark:", err);
                     }
                 }
             });
@@ -406,27 +417,17 @@ function displayBookmarks(bookmarkNodes) {
 
             // Open links in the current tab or new tab if ctrl pressed
             link.addEventListener("click", function (event) {
+                const hasBrowserTabs = typeof browser !== 'undefined' && browser.tabs;
+                const hasChromeTabs = typeof chrome !== 'undefined' && chrome.tabs && chrome.tabs.create;
+                event.preventDefault();
                 if (event.ctrlKey || event.metaKey) {
-                    // Open in a new tab
-                    event.preventDefault();
-                    if (isFirefox) {
-                        browser.tabs.create({ url: node.url, active: false });
-                    } else if (isChromiumBased) {
-                        chrome.tabs.create({ url: node.url, active: false });
-                    } else {
-                        window.open(node.url, "_blank");
-                    }
+                    if (hasBrowserTabs) browser.tabs.create({ url: node.url, active: false });
+                    else if (hasChromeTabs) chrome.tabs.create({ url: node.url, active: false });
+                    else window.open(node.url, "_blank");
                 } else {
-                    // Open in the current tab
-                    event.preventDefault();
-                    if (isFirefox) {
-                        browser.tabs.update({ url: node.url });
-                    } else if (isChromiumBased) {
-                        chrome.tabs.update({ url: node.url }, function () {
-                        });
-                    } else {
-                        window.location.href = node.url;
-                    }
+                    if (hasBrowserTabs) browser.tabs.update({ url: node.url });
+                    else if (hasChromeTabs) chrome.tabs.update({ url: node.url });
+                    else window.location.href = node.url;
                 }
             });
             list.appendChild(item);
@@ -457,6 +458,7 @@ bookmarkList.addEventListener("contextmenu", function (event) {
     setBookmarkFavicon(editBookmarkFavicon, bookmarkURL);
 
     // Show modal
+    document.getElementById("editBookmarkHeading").textContent = "Edit Bookmark";
     editBookmarkModal.style.display = "block";
     saveBookmarkChanges.disabled = false;
 });
@@ -468,38 +470,56 @@ editBookmarkURL.addEventListener("input", () => {
 
 // Save button action
 saveBookmarkChanges.onclick = function () {
-    if (!currentBookmarkId) return;
-
     const updatedTitle = editBookmarkName.value.trim();
     const updatedURL = encodeURI(editBookmarkURL.value.trim());
 
     const updatedData = { title: updatedTitle, url: updatedURL };
+    let action;
 
-    if (isFirefox) {
-        bookmarksAPI.update(currentBookmarkId, updatedData).then(() => {
-            updateBookmark(currentBookmarkId, updatedTitle, updatedURL);
-            editBookmarkModal.style.display = "none";
-        }).catch(err => {
-            console.error("Error updating bookmark:", err);
-        });
+    if (!currentBookmarkId || currentBookmarkId === "new") {
+        if (!updatedURL) return;
+        action = bookmarksAPI.create ? bookmarksAPI.create(updatedData) : null;
     } else {
-        bookmarksAPI.update(currentBookmarkId, updatedData, function () {
-            if (chrome.runtime.lastError) {
-                console.error("Error updating bookmark:", chrome.runtime.lastError);
-                return;
-            }
-            updateBookmark(currentBookmarkId, updatedTitle, updatedURL);
-            editBookmarkModal.style.display = "none";
-        });
+        action = bookmarksAPI.update(currentBookmarkId, updatedData);
     }
 
-    loadBookmarks();
+    function done() {
+        if (currentBookmarkId && currentBookmarkId !== "new") {
+            updateBookmark(currentBookmarkId, updatedTitle, updatedURL);
+        }
+        editBookmarkModal.style.display = "none";
+        currentBookmarkId = null;
+        loadBookmarks();
+    }
+
+    try {
+        if (action && typeof action.then === 'function') {
+            action.then(done).catch(err => console.error("Error saving bookmark:", err));
+        } else {
+            done();
+        }
+    } catch (err) {
+        console.error("Error saving bookmark:", err);
+    }
 };
 
 // Cancel button action
 cancelBookmarkEdit.onclick = function () {
     editBookmarkModal.style.display = "none";
+    currentBookmarkId = null;
 };
+
+// "Add link" button handler
+document.getElementById("addBookmarkBtn").addEventListener("click", function () {
+    currentBookmarkId = "new";
+    editBookmarkName.value = "";
+    editBookmarkURL.value = "";
+    editBookmarkFavicon.src = "";
+    document.getElementById("editBookmarkHeading").textContent = "Add Link";
+    saveBookmarkChanges.disabled = true;
+    editBookmarkModal.style.display = "block";
+    setTimeout(() => editBookmarkName.focus(), 100);
+});
 
 // Function to update after edit
 function updateBookmark(bookmarkId, title, url) {
@@ -551,8 +571,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    loadCheckboxState("bookmarksCheckboxState", bookmarksCheckbox);
-    loadDisplayStatus("bookmarksDisplayStatus", bookmarkButton);
+    const savedBookmarks = localStorage.getItem("bookmarksCheckboxState");
+    bookmarksCheckbox.checked = savedBookmarks ? savedBookmarks === "checked" : false;
+    const savedDisplay = localStorage.getItem("bookmarksDisplayStatus");
+    bookmarkButton.style.display = savedDisplay || (bookmarksCheckbox.checked ? "flex" : "none");
     loadCheckboxState("bookmarkGridCheckboxState", bookmarkGridCheckbox);
 });
 
@@ -574,3 +596,5 @@ document.addEventListener("keydown", function (event) {
         bookmarkButton.click();
     }
 });
+
+

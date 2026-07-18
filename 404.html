@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">SakuraKono</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+        @font-face {
+            font-family: "poppins";
+            src: url("./fonts/Poppins-Regular.ttf") format("truetype");
+        }
+        :root {
+            --main-font-family: "poppins", "Poppins", sans-serif;
+            --bg: #bbd6fd;
+            --text: #1b3041;
+            --accent: #4382ec;
+        }
+        body {
+            font-family: var(--main-font-family);
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            user-select: none;
+            transition: background 0.3s, color 0.3s;
+        }
+        .container {
+            text-align: center;
+            max-width: 420px;
+        }
+        .brand {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 24px;
+            letter-spacing: 0.02em;
+        }
+        .code {
+            font-size: 7rem;
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--accent), #7c4dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+        .message {
+            font-size: 1.05rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .sub {
+            font-size: 0.9rem;
+            opacity: 0.65;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            font-family: inherit;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.85; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="brand" id="brandText">SakuraKono</div>
+        <div class="code">404</div>
+        <div class="message" id="msgTitle">页面未找到</div>
+        <div class="sub" id="msgDesc">您访问的页面不存在或已被移除。</div>
+        <a class="btn" id="btnHome" href="/">返回首页</a>
+    </div>
+    <script>
+        (function () {
+            var themeSet = {
+                blue:     { bg: "#bbd6fd", accent: "#4382ec", text: "#1b3041" },
+                red:      { bg: "#fdbdbd", accent: "#ec4343", text: "#411b1b" },
+                yellow:   { bg: "#ffed80", accent: "#d1a93d", text: "#2f2707" },
+                green:    { bg: "#c7e4c7", accent: "#5cba5c", text: "#1b411b" },
+                cyan:     { bg: "#9cefef", accent: "#09b2b4", text: "#08354b" },
+                pink:     { bg: "#f9c8d6", accent: "#ec5e78", text: "#411b28" },
+                orange:   { bg: "#ffd8b2", accent: "#ec844d", text: "#412b1e" },
+                purple:   { bg: "#dac2e8", accent: "#9563b5", text: "#2d1b3e" },
+                silver:   { bg: "#c6c6c6", accent: "#9e9e9e", text: "#333333" },
+                brown:    { bg: "#dfc28d", accent: "#705347", text: "#16100d" },
+                peach:    { bg: "#ffccbf", accent: "#9c29ba", text: "#441730" },
+                dark:     { bg: "#121220", accent: "#4382ec", text: "#d6d6d6" }
+            };
+
+            try {
+                var root = document.documentElement;
+                var preferred = localStorage.getItem("preferredTheme") || "light";
+                var custom = localStorage.getItem("customThemeColor");
+                var theme = localStorage.getItem("selectedTheme") || "blue";
+                var dark = preferred === "dark" || (preferred === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+
+                if (dark) root.classList.add("black-theme");
+
+                var colors;
+                if (theme === "dark" || dark) {
+                    colors = themeSet.dark;
+                } else if (custom) {
+                    colors = { bg: custom, accent: custom, text: "#1b3041" };
+                } else {
+                    colors = themeSet[theme] || themeSet.blue;
+                }
+
+                root.style.setProperty("--bg", colors.bg);
+                root.style.setProperty("--accent", colors.accent);
+                root.style.setProperty("--text", colors.text);
+
+                // --- Language ---
+                var lang = localStorage.getItem("selectedLanguage") || "";
+                if (!lang) {
+                    lang = (navigator.language || "").toLowerCase().startsWith("zh") ? "zh" : "en";
+                }
+                var isZh = lang === "zh";
+                document.getElementById("pageTitle").textContent = "SakuraKono";
+                if (isZh) {
+                    document.documentElement.lang = "zh-CN";
+                    document.getElementById("msgTitle").textContent = "\u9875\u9762\u672A\u627E\u5230";
+                    document.getElementById("msgDesc").textContent = "\u60A8\u8BBF\u95EE\u7684\u9875\u9762\u4E0D\u5B58\u5728\u6216\u5DF2\u88AB\u79FB\u9664\u3002";
+                    document.getElementById("btnHome").textContent = "\u8FD4\u56DE\u9996\u9875";
+                } else {
+                    document.documentElement.lang = "en";
+                    document.getElementById("msgTitle").textContent = "Page Not Found";
+                    document.getElementById("msgDesc").textContent = "The page you are looking for does not exist or has been moved.";
+                    document.getElementById("btnHome").textContent = "Back to Home";
+                }
+            } catch (e) {}
+        })();
+    </script>
+</body>
+</html>

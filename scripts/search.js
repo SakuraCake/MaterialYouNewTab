@@ -1,6 +1,8 @@
 /*
  * Material You New Tab
  * Copyright (c) 2024-2026 Prem, 2023-2025 XengShi
+ * Copyright (c) 2026 SakuraCake
+ * Modified by SakuraCake for SakuraKono
  * Licensed under the GNU General Public License v3.0 (GPL-3.0)
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see <https://www.gnu.org/licenses/>.
@@ -19,7 +21,8 @@ const searchQueryURLs = {
     engine6: "https://www.google.com/search?tbm=isch&q=",
     engine7: "https://www.reddit.com/search/?q=",
     engine8: `https://${languageCode}.wikipedia.org/wiki/Special:Search?search=`,
-    engine9: "https://www.quora.com/search?q="
+    engine9: "https://www.quora.com/search?q=",
+    engine10: "https://medium.com/search?q="
 };
 
 // Showing border or outline when you click on the searchbar
@@ -61,7 +64,7 @@ searchWith.addEventListener("click", function (event) {
 
 function toggleSearchEngines(category) {
     const defaultItems = {
-        "search-with": "engine0",
+        "search-with": "engine10",
         "search-on": "engine5",
     };
     const checkeditem = localStorage.getItem(`selectedSearchEngine-${category}`) || defaultItems[category];
@@ -236,21 +239,19 @@ const storedSearchEngine = localStorage.getItem(`selectedSearchEngine-${activeSe
 
 toggleSearchEngines(activeSearchMode);
 
-if (storedSearchEngine) {
-    // Find Serial Number - SN with the help of charAt.
-    const storedSearchEngineSN = storedSearchEngine.charAt(storedSearchEngine.length - 1);
+const defaultFallback = activeSearchMode === "search-with" ? "engine10" : "engine5";
+const currentEngine = storedSearchEngine || defaultFallback;
+if (currentEngine) {
+    const currentEngineSN = currentEngine.charAt(currentEngine.length - 1);
     const defaultDropdownSN = document.querySelector("*[data-default]").getAttribute("data-engine");
 
-    // check if the default selected search engine is same as the stored one.
-    if (storedSearchEngineSN !== defaultDropdownSN) {
-        // The following line will find out the appropriate dropdown for the selected search engine.
-        const selector = `*[data-engine="${storedSearchEngineSN}"]`;
-
+    if (currentEngineSN !== defaultDropdownSN) {
+        const selector = `*[data-engine="${currentEngineSN}"]`;
         swapDropdown(selector);
         sortDropdown();
     }
 
-    const selectedRadioButton = document.querySelector(`input[name="search-engine"][value="${storedSearchEngine}"]`);
+    const selectedRadioButton = document.querySelector(`input[name="search-engine"][value="${currentEngine}"]`);
     if (selectedRadioButton) {
         selectedRadioButton.checked = true;
     }
@@ -392,7 +393,9 @@ if (localStorage.getItem("showShortcutSwitch")) {
         showEngineContainer()
     }
 } else {
-    localStorage.setItem("showShortcutSwitch", false);
+    localStorage.setItem("showShortcutSwitch", true);
+    document.getElementById("shortcut_switchcheckbox").checked = true;
+    hideEngineContainer();
 }
 
 initShortCutSwitch(hideSearchWith);
@@ -528,3 +531,4 @@ document.addEventListener("keydown", function (event) {
         searchbar.classList.add("active");
     }
 });
+

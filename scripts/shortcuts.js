@@ -1,6 +1,8 @@
 /*
  * Material You New Tab
  * Copyright (c) 2024-2026 Prem, 2023-2025 XengShi
+ * Copyright (c) 2026 SakuraCake
+ * Modified by SakuraCake for SakuraKono
  * Licensed under the GNU General Public License v3.0 (GPL-3.0)
  */
 
@@ -84,11 +86,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Loads all settings from localStorage and applies them
     function loadSettings() {
-        loadCheckboxState("shortcutsCheckboxState", dom.shortcutsCheckbox);
+        const savedShortcuts = localStorage.getItem("shortcutsCheckboxState");
+        dom.shortcutsCheckbox.checked = savedShortcuts ? savedShortcuts === "checked" : true;
         loadCheckboxState("adaptiveIconToggle", dom.adaptiveIconToggle);
         loadActiveStatus("shortcutEditField", dom.shortcutEditField);
         loadActiveStatus("adaptiveIconField", dom.adaptiveIconField);
-        loadDisplayStatus("shortcutsDisplayStatus", dom.shortcuts);
+        // Default shortcuts to visible
+        const savedDisplay = localStorage.getItem("shortcutsDisplayStatus");
+        dom.shortcuts.style.display = savedDisplay || (dom.shortcutsCheckbox.checked ? "flex" : "none");
 
         // Apply adaptive icon style if enabled
         if (dom.adaptiveIconToggle.checked) {
@@ -1008,3 +1013,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
+

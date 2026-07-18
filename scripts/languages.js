@@ -1,6 +1,8 @@
 /*
  * Material You New Tab
  * Copyright (c) 2024-2026 Prem, 2023-2025 XengShi
+ * Copyright (c) 2026 SakuraCake
+ * Modified by SakuraCake for SakuraKono
  * Licensed under the GNU General Public License v3.0 (GPL-3.0)
  * You should have received a copy of the GNU General Public License along with this program.
  * If not, see <https://www.gnu.org/licenses/>.
@@ -8,111 +10,22 @@
 
 // Translation data
 const translations = {
-    en: en, // English
-    pt: pt, // Portuguese-BR (Brazil)
-    zh: zh, // Chinese (Simplified)
-    zh_TW: zh_TW, // Chinese (Traditional)
-    hi: hi, // Hindi
-    hu: hu, // Hungarian
-    cs: cs, // Czech
-    it: it, // Italian
-    tr: tr, // Turkish
-    bn: bn, // Bengali
-    vi: vi, // Vietnamese
-    ru: ru, // Russian
-    uz: uz, // Uzbek
-    es: es, // Spanish
-    ja: ja, // Japanese
-    ko: ko, // Korean
-    idn: idn, // Indonesian
-    mr: mr, // Marathi
-    fr: fr, // French
-    az: az, // Azerbaijani
-    sl: sl, // Slovenian
-    ne: ne, // Nepali
-    ur: ur, // Urdu
-    de: de, // German
-    fa: fa, // Farsi (Persian)
-    ar_SA: ar_SA, // Arabic (Saudi Arabia)
-    el: el, // Greek
-    ta: ta, // தமிழ்
-    th: th, // Thai
-    pl: pl, // Polish
-    uk: uk, // Ukrainian
-    sv: sv, // Swedish
+    en: en,
+    zh: zh,
 };
 
 // Define the width of the menu container for each language
 const menuWidths = {
     en: "443px",
-    ta: "522px",
-    pt: "512px",
-    sv: "472px",
-    bn: "458px",
-    uz: "497px",
-    vi: "487px",
-    cs: "494px",
-    es: "488px",
-    hi: "450px",
-    mr: "460px",
-    hu: "487px",
-    ja: "486px",
-    ru: "442px",
-    it: "479px",
-    idn: "477px",
-    tr: "472px",
-    fr: "517px",
-    az: "460px",
-    sl: "512px",
-    ne: "472px",
-    de: "502px",
-    fa: "502px",
-    ar_SA: "482px",
-    el: "497px",
-    th: "497px",
-    pl: "497px",
-    uk: "497px",
-    // Add more languages and widths as needed
+    zh: "480px",
 };
-
-const numberMappings = {
-    "bn": { "0": "০", "1": "১", "2": "২", "3": "৩", "4": "৪", "5": "৫", "6": "৬", "7": "৭", "8": "৮", "9": "৯" },
-    "ta": { "0": "௦", "1": "௧", "2": "௨", "3": "௩", "4": "௪", "5": "௫", "6": "௬", "7": "௭", "8": "௮", "9": "௯" },
-    "mr": { "0": "०", "1": "१", "2": "२", "3": "३", "4": "४", "5": "५", "6": "६", "7": "७", "8": "८", "9": "९" },
-    "ne": { "0": "०", "1": "१", "2": "२", "3": "३", "4": "४", "5": "५", "6": "६", "7": "७", "8": "८", "9": "९" },
-    "fa": { 0: "۰", 1: "۱", 2: "۲", 3: "۳", 4: "۴", 5: "۵", 6: "۶", 7: "۷", 8: "۸", 9: "۹" },
-    "ar_SA": { 0: "۰", 1: "۱", 2: "۲", 3: "۳", 4: "٤", 5: "٥", 6: "٦", 7: "۷", 8: "۸", 9: "۹" }
-    // Add more languages as needed, Ensure it is supported in the fonts
-};
-
-const LRM = "\u200E"; // Left-to-Right Mark
 
 function localizeNumbers(text, language) {
-    const map = numberMappings[language]; // Get the numeral map for the current language
-
-    // Define languages that use a comma as the decimal separator instead of a dot
-    const specialDecimalLanguages = ["cs", "it", "pt", "ru", "tr", "vi", "uz", "es", "ko", "idn", "fr", "az", "sl", "hu", "de", "fa", "el", "uk", "sv"]; // Add more languages here as needed
-
-    if (specialDecimalLanguages.includes(language)) {
-        // Replace decimal point with a comma for specific languages
-        text = text.replace(".", ",");
-    }
-    // Apply digit localization if the numeral map exists
-    if (map) {
-        text = text.replace(/\d/g, (digit) => map[digit] || digit);
-    }
-
-    // LRM marks, for RTL languages to ensure correct display
-    const rtlFlipLanguages = ["ar_SA"];
-    if (rtlFlipLanguages.includes(language)) {
-        text = `${LRM}${text}${LRM}`;
-    }
-
-    return text; // Return the localized text
+    return text;
 }
 
-// Right-to-left languages
-const rtlLanguages = ["ur", "fa", "ar_SA"];
+// Right-to-left languages (none currently loaded)
+const rtlLanguages = [];
 
 // Function to apply the language to the page
 function applyLanguage(lang) {
@@ -152,8 +65,10 @@ function applyLanguage(lang) {
         "hideSearchWithInfo",
         "motivationalQuotesText",
         "motivationalQuotesInfo",
-        "newQuoteOnRefreshText",
-        "newQuoteOnRefreshInfo",
+        "hitokotoCategoryText",
+        "hitokotoCategoryInfo",
+        "hitokotoIntervalText",
+        "hitokotoIntervalInfo",
         "search_suggestions_button",
         "search_suggestions_text",
         "hideClockBox",
@@ -164,8 +79,6 @@ function applyLanguage(lang) {
         "timeformatinfo",
         "greetingtitle",
         "greetinginfo",
-        "userTextTitle",
-        "userTextInfo",
         "useproxytitletext",
         "useproxyText",
         "ProxyText",
@@ -192,6 +105,7 @@ function applyLanguage(lang) {
         "redditEngine",
         "wikipediaEngine",
         "quoraEngine",
+        "articleEngine",
         "chatGPT",
         "gemini",
         "copilot",
@@ -201,7 +115,7 @@ function applyLanguage(lang) {
         "perplexity",
         "deepseek",
         "metaAI",
-        'firefly',
+        "firefly",
         "github",
         "googleAppsHover",
         "todoListHover",
@@ -268,6 +182,7 @@ function applyLanguage(lang) {
         { id: "redditEngineDD", key: "redditEngine" },
         { id: "wikipediaEngineDD", key: "wikipediaEngine" },
         { id: "quoraEngineDD", key: "quoraEngine" },
+        { id: "articleEngineDD", key: "articleEngine" },
         { id: "bookmarksHover", key: "bookmarksHeading" },
         { id: "saveproxy", key: "saveAPI" },
         { id: "saveLoc", key: "saveAPI" },
@@ -306,17 +221,6 @@ function applyLanguage(lang) {
     applyTranslations(elementsMap, false);     // For innerTexts with different IDs and keys
     applyTranslations(translationMap, false);  // For innerTexts with same ID and keys
 
-    // For userText
-    const userTextDiv = document.getElementById("userText");
-    if (translations[lang]) {
-        const placeholder = translations[lang]?.userText || translations["en"].userText;
-        userTextDiv.dataset.placeholder = placeholder; // Update the placeholder in data attribute
-        // Only set the text content if there's nothing in localStorage
-        if (!localStorage.getItem("userText")) {
-            userTextDiv.innerText = placeholder;
-        }
-    }
-
     // Update placeholders on already-rendered shortcut inputs
     document.querySelectorAll(".shortcutSettingsEntry .shortcutName")
         .forEach(el => el.placeholder = translations[lang]?.shortcutInputName  || translations["en"].shortcutInputName);
@@ -351,33 +255,12 @@ function applyLanguage(lang) {
         }
     }
 
-    // Function to dynamically load Google Fonts
-    function loadFont(fontUrl) {
-        if (!document.querySelector(`link[href="${fontUrl}"]`)) {
-            const link = document.createElement("link");
-            link.rel = "stylesheet";
-            link.href = fontUrl;
-            document.head.appendChild(link);
-        }
-    }
-
-    // Dynamically update the font family based on the language
+    // Dynamically update the font family
     const root = document.documentElement;
     const commonFontStack = "'poppins', 'Poppins', sans-serif";
-    if (lang === "vi") {
-        loadFont("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro&display=swap");
-        root.style.setProperty("--main-font-family", `"Be Vietnam Pro", ${commonFontStack}`);
-    } else if (lang === "ur") {
-        loadFont("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic&display=swap");
-        root.style.setProperty("--main-font-family", `"Noto Sans Arabic", ${commonFontStack}`);
-    } else if (lang === "fa") {
-        loadFont("https://fonts.googleapis.com/css2?family=Vazirmatn&display=swap"); // Using Vazirmatn for Farsi
-        root.style.setProperty("--main-font-family", `"Vazirmatn", ${commonFontStack}`);
-    } else {
-        root.style.setProperty("--main-font-family", commonFontStack);
-    }
+    root.style.setProperty("--main-font-family", commonFontStack);
 
-    // Apply the direction attribute to specific selectors for RTL languages
+    // Apply the direction attribute for RTL languages
     const isRTL = rtlLanguages.includes(lang);
     const rtlSelectors = [".topDiv", ".searchbar", ".searchWithCont", ".resultBox", ".quotesCont",
         ".leftDiv", ".shortcutsContainer", ".page", "#prompt-modal-box", ".todo-container",
@@ -391,13 +274,14 @@ function applyLanguage(lang) {
 
     // Update feelsLike element styles for RTL languages
     const feelsLikeElement = document.getElementById("feelsLike");
-    feelsLikeElement.style.left = isRTL ? "12px" : "";
-    feelsLikeElement.style.paddingRight = isRTL ? "43px" : "";
-    feelsLikeElement.style.width = isRTL ? "calc(100% - 12px)" : "";
-    feelsLikeElement.style.textAlign = isRTL ? "right" : "left";
+    if (feelsLikeElement) {
+        feelsLikeElement.style.left = isRTL ? "12px" : "";
+        feelsLikeElement.style.paddingRight = isRTL ? "43px" : "";
+        feelsLikeElement.style.width = isRTL ? "calc(100% - 12px)" : "";
+        feelsLikeElement.style.textAlign = isRTL ? "right" : "left";
+    }
 
     const quotesText = document.querySelector(".quotesContainer");
-    // quotesText.style.textAlign = isRTL ? "right" : "left";
     quotesText.style.fontFamily = commonFontStack;
 
     // Save the selected language in localStorage
@@ -413,7 +297,11 @@ document.getElementById("languageSelector").addEventListener("change", (event) =
 
 // Function to apply the language when the page loads
 window.onload = function () {
-    const savedLanguage = getLanguageStatus("selectedLanguage") || "en"; // Default language is English
+    let savedLanguage = getLanguageStatus("selectedLanguage");
+    if (!savedLanguage) {
+        const navLang = (navigator.language || "").toLowerCase();
+        savedLanguage = navLang.startsWith("zh") ? "zh" : "en";
+    }
     document.getElementById("languageSelector").value = savedLanguage;
     applyLanguage(savedLanguage);
 };
@@ -427,3 +315,4 @@ function saveLanguageStatus(key, languageStatus) {
 function getLanguageStatus(key) {
     return localStorage.getItem(key);
 }
+

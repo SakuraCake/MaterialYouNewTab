@@ -1,6 +1,8 @@
 <!--
      Material You New Tab
      Copyright (c) 2024-2026 Prem, 2023-2025 XengShi
+Copyright (c) 2026 SakuraCake
+     Modified by SakuraCake for SakuraKono
      Licensed under the GNU General Public License v3.0 (GPL-3.0)
      You should have received a copy of the GNU General Public License along with this program.
      If not, see <https://www.gnu.org/licenses/>.
@@ -13,13 +15,14 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta name="google-site-verification" content="j8K161R-W9yVVDoylaoPd2twGbjToAC3EzAFfZU1YOY" />
-    <title>New Tab</title>
+    <title>SakuraKono</title>
     <link href="style.css" rel="stylesheet">
     <link href="./favicon/icon48.png" id="favicon" rel="icon" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 
     <!-- SCRIPTS -->
     <script src="scripts/preload.js"></script>
+    <script defer src="scripts/pages.js"></script>
     <script defer src="scripts/languages.js"></script>
     <script defer src="scripts/save-load-states.js"></script>
     <script defer src="scripts/menu-shortcut-page.js"></script>
@@ -44,38 +47,8 @@
     <script defer src="scripts/backup-restore.js"></script>
 
     <!-- LANGUAGES SCRIPTS -->
-    <script src="locales/pt.js"></script>
     <script src="locales/en.js"></script>
-    <script src="locales/ne.js"></script>
-    <script src="locales/es.js"></script>
-    <script src="locales/hi.js"></script>
-    <script src="locales/hu.js"></script>
     <script src="locales/zh.js"></script>
-    <script src="locales/zh_TW.js"></script>
-    <script src="locales/cs.js"></script>
-    <script src="locales/it.js"></script>
-    <script src="locales/tr.js"></script>
-    <script src="locales/bn.js"></script>
-    <script src="locales/vi.js"></script>
-    <script src="locales/ru.js"></script>
-    <script src="locales/uz.js"></script>
-    <script src="locales/ja.js"></script>
-    <script src="locales/ko.js"></script>
-    <script src="locales/idn.js"></script>
-    <script src="locales/mr.js"></script>
-    <script src="locales/fr.js"></script>
-    <script src="locales/az.js"></script>
-    <script src="locales/sl.js"></script>
-    <script src="locales/ur.js"></script>
-    <script src="locales/de.js"></script>
-    <script src="locales/fa.js"></script>
-    <script src="locales/ar_SA.js"></script>
-    <script src="locales/el.js"></script>
-    <script src="locales/ta.js"></script>
-    <script src="locales/th.js"></script>
-    <script src="locales/pl.js"></script>
-    <script src="locales/uk.js"></script>
-    <script src="locales/sv.js"></script>
 </head>
 
 <body>
@@ -123,7 +96,7 @@
                 clip-rule="evenodd" />
         </svg>
         <!-- Text to appear on hover -->
-        <span class="tooltip-text" id="bookmarksHover">Bookmarks</span>
+        <span class="tooltip-text" id="bookmarksHover">个人链接</span>
     </div>
     <div id="bookmarksContainer">
         <div id="bookmarkSidebar" class="bookmark-sidebar">
@@ -136,6 +109,7 @@
 
             <div class="bookmark-sidebar-header">
                 <h2 id="bookmarksHeading">Bookmarks</h2>
+                <button id="addBookmarkBtn" class="bookmark-add-button" title="Add Link">+</button>
             </div>
             <div class="bookmark-search-container">
                 <input type="text" id="bookmarkSearch" placeholder="Search bookmark" />
@@ -198,7 +172,7 @@
                 d="M8 6a2 2 0 1 1-4 0 2 2 0 0 1 4 0m0 6a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-2 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m8-14a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-2 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4m2 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4-10a2 2 0 1 0 0-4 2 2 0 0 0 0 4m2 4a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-2 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
         </svg>
         <!-- Text to appear on hover -->
-        <span class="tooltip-text" id="googleAppsHover">Google Apps</span>
+        <span class="tooltip-text" id="googleAppsHover">社交链接</span>
     </div>
 
     <!-- Centered Icon Container -->
@@ -614,7 +588,7 @@
             <!-- ____________end of clock______________ -->
 
             <div class="ttteexxtt">
-                <div id="userText" contenteditable="true" spellcheck="false">Click here to edit</div>
+                <div id="userText">SakuraKono</div>
                 <div id="date"></div>
             </div>
         </div>
@@ -770,6 +744,13 @@
                                 <span class="engine-name" id="quoraEngineDD">Quora</span>
                             </div>
 
+                            <div data-engine="10" data-engine-name="article" id="article-dropdown" class="dropdown-item">
+                                <svg width="30" height="30">
+                                    <use href="#article-engine-icon" />
+                                </svg>
+                                <span class="engine-name" id="articleEngineDD">文章</span>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -864,6 +845,12 @@
                 </symbol>
             </svg>
 
+            <svg style="display: none;">
+                <symbol id="article-engine-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 3h10l5 5v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm9 1v4h4M7 12h10M7 16h6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </symbol>
+            </svg>
+
             <!-- ----------search with------------------- -->
             <div class="searchWithCont" style="visibility: hidden;" id="search-with-container">
 
@@ -909,6 +896,14 @@
                         </svg>
                         <label class="engine-name" id="braveEngine">Brave</label>
                         <input class="radio-button" name="search-engine" type="radio" value="engine4">
+                    </div>
+
+                    <div class="search-engine bgLightTint" data-category="search-with">
+                        <svg width="30" height="30" class="search-engine-icon">
+                            <use href="#article-engine-icon" />
+                        </svg>
+                        <label class="engine-name" id="articleEngine">文章</label>
+                        <input class="radio-button" name="search-engine" type="radio" value="engine10">
                     </div>
 
                     <div class="search-engine bgLightTint" data-category="search-on">
@@ -1204,40 +1199,57 @@
             </div>
             <!-- ---end of rounder--- -->
             <div class="topDiv">
-                <h1>Material You New Tab</h1>
+                <h1>SakuraKono</h1>
             </div>
             <div class="optCont" id="optCont">
+                <!-- Page 1: Navigation -->
                 <div class="page" id="overviewPage">
-                    <div class="tilesCont">
-
-                        <!-- ----tiles----------- -->
-                        <a class="tiles" href="https://github.com/prem-k-r/MaterialYouNewTab">
-                            <div class="icon">
-                                <svg height="100%" viewBox="0 0 20 20" width="100%" xmlns="http://www.w3.org/2000/svg">
-                                    <path id="githab" class="bgLightTint notTargeted"
-                                        d="M10 0C4.475 0 0 4.588 0 10.253c0 4.537 2.862 8.369 6.838 9.727.5.09.687-.218.687-.487 0-.243-.013-1.05-.013-1.91C5 18.059 4.35 16.957 4.15 16.38c-.113-.295-.6-1.205-1.025-1.448-.35-.192-.85-.667-.012-.68.787-.012 1.35.744 1.537 1.052.9 1.55 2.337 1.115 2.913.845.087-.666.35-1.115.637-1.371-2.225-.256-4.55-1.14-4.55-5.062 0-1.115.387-2.038 1.025-2.756-.1-.256-.45-1.307.1-2.717 0 0 .837-.269 2.75 1.051.8-.23 1.65-.346 2.5-.346.85 0 1.7.115 2.5.346 1.912-1.333 2.75-1.05 2.75-1.05.55 1.409.2 2.46.1 2.716.637.718 1.025 1.628 1.025 2.756 0 3.934-2.337 4.806-4.563 5.062.363.32.675.936.675 1.897 0 1.371-.012 2.473-.012 2.82 0 .269.188.589.688.486a10.037 10.037 0 0 0 4.932-3.74A10.445 10.445 0 0 0 20 10.253C20 4.588 15.525 0 10 0Z" />
-                                </svg>
-
-                            </div>
-                            <span id="github">Github</span>
-                        </a>
-                        <!-- -----end of tiles-------- -->
-                        <!-- ----tiles----------- -->
-                        <a class="tiles" href="https://prem-k-r.github.io/MaterialYouNewTab/docs/feedback.html">
-                            <div class="icon">
-                                <svg height="100%" viewBox="0 0 18 17" width="100%" xmlns="http://www.w3.org/2000/svg">
-                                    <path id="sujhaw" class="bgLightTint notTargeted" clip-rule="evenodd"
-                                        d="M10.35 0c2.029 0 3.975.801 5.41 2.228A7.583 7.583 0 0 1 18 7.605a7.583 7.583 0 0 1-2.24 5.378 7.673 7.673 0 0 1-5.41 2.227H9.9v.886a.899.899 0 0 1-.562.835.915.915 0 0 1-.348.069c-2.214-.002-4.457-.736-6.159-2.24C1.114 13.24.001 10.983 0 8.06v-.455c0-2.017.806-3.951 2.24-5.377A7.673 7.673 0 0 1 7.65 0h2.7Zm-4.5 6.263c-.358 0-.701.142-.955.393a1.338 1.338 0 0 0 0 1.898 1.354 1.354 0 0 0 1.91 0 1.338 1.338 0 0 0 0-1.898 1.354 1.354 0 0 0-.955-.393Zm6.3 0c-.358 0-.701.142-.955.393a1.338 1.338 0 0 0 0 1.898 1.354 1.354 0 0 0 1.91 0 1.338 1.338 0 0 0 0-1.898 1.354 1.354 0 0 0-.955-.393Z"
-                                        fill-rule="evenodd" />
-                                </svg>
-                            </div>
-                            <span id="feedback">Feedback</span>
-                        </a>
-                        <!-- -----end of tiles-------- -->
-
+                    <div class="topBar">
+                        <div class="pageTitle" id="navPageTitle">导航</div>
                     </div>
-                    <!-- end of tilesCont -->
 
+                    <div class="navSection">
+                        <div class="navItem" data-nav="about">
+                            <span class="navLabel" id="navAbout">关于</span>
+                            <span class="navArrow">›</span>
+                        </div>
+                        <div class="navItem" data-nav="projects">
+                            <span class="navLabel" id="navProjects">项目</span>
+                            <span class="navArrow">›</span>
+                        </div>
+                        <div class="navItem" data-nav="contact">
+                            <span class="navLabel" id="navContact">联系</span>
+                            <span class="navArrow">›</span>
+                        </div>
+                        <div class="navItem" data-nav="links">
+                            <span class="navLabel" id="navLinks">个人链接</span>
+                            <span class="navArrow">›</span>
+                        </div>
+                        <div class="navItem" data-nav="friends">
+                            <span class="navLabel" id="navFriends">友情链接</span>
+                            <span class="navArrow">›</span>
+                        </div>
+                    </div>
+
+                    <div class="navSection">
+                        <div class="navItem" id="openSettingsBtn">
+                            <span class="navLabel" id="navSettings">设置</span>
+                            <span class="navArrow">›</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- end of page 1 (nav) -->
+
+                <!-- Page 2: Settings (Level 2) -->
+                <div class="page" id="settingsPage" style="display: none;">
+                    <div class="topBar">
+                        <button id="settingsBackButton">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M21 11H6.414l5.293-5.293l-1.414-1.414L2.586 12l7.707 7.707l1.414-1.414L6.414 13H21z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="pageTitle" id="settingsTitle">设置</div>
                     <div class="toggleTextsCont">
 
                         <div class="section expanded">
@@ -1305,8 +1317,8 @@
                                 <div class="sectionInner">
                                     <div class="ttcont">
                                         <div class="texts">
-                                            <div class="bigText" id="bookmarksText">Bookmarks</div>
-                                            <div class="infoText" id="bookmarksInfo">Show bookmarks sidebar</div>
+                                            <div class="bigText" id="bookmarksText">个人链接</div>
+                                            <div class="infoText" id="bookmarksInfo">显示个人链接与友情链接</div>
                                         </div>
                                         <label class="switch">
                                             <input id="bookmarksCheckbox" type="checkbox">
@@ -1345,8 +1357,8 @@
 
                                     <div class="ttcont">
                                         <div class="texts">
-                                            <div class="bigText" id="googleAppsMenuText">Google Apps</div>
-                                            <div class="infoText" id="googleAppsMenuInfo">Show shortcuts for Google Apps
+                                            <div class="bigText" id="googleAppsMenuText">社交链接</div>
+                                            <div class="infoText" id="googleAppsMenuInfo">显示社交媒体链接
                                             </div>
                                         </div>
                                         <label class="switch">
@@ -1428,17 +1440,6 @@
                                             </label>
                                         </div>
 
-                                        <div class="ttcont">
-                                            <div class="texts">
-                                                <div class="bigText" id="userTextTitle">Customizable Text</div>
-                                                <div class="infoText" id="userTextInfo">Show custom text below the clock
-                                                </div>
-                                            </div>
-                                            <label class="switch">
-                                                <input id="userTextCheckbox" type="checkbox">
-                                                <span class="toggle"></span>
-                                            </label>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1479,9 +1480,8 @@
 
                                     <div class="ttcont" id="quotesToggle">
                                         <div class="texts">
-                                            <div class="bigText" id="motivationalQuotesText">Motivational Quotes</div>
-                                            <div class="infoText" id="motivationalQuotesInfo">Show quotes below the
-                                                searchbar</div>
+                                            <div class="bigText" id="motivationalQuotesText">一言</div>
+                                            <div class="infoText" id="motivationalQuotesInfo">在搜索栏下方显示一言</div>
                                         </div>
                                         <label class="switch">
                                             <input id="motivationalQuotesCheckbox" type="checkbox">
@@ -1490,16 +1490,19 @@
                                     </div>
 
                                     <div class="quotesOptions">
-                                        <div class="ttcont" id="newQuoteOnRefreshToggle">
+                                        <div class="ttcont" id="hitokotoCategoryToggle">
                                             <div class="texts">
-                                                <div class="bigText" id="newQuoteOnRefreshText">Daily Quote</div>
-                                                <div class="infoText" id="newQuoteOnRefreshInfo">Show one quote per day
-                                                    instead of refreshing each time</div>
+                                                <div class="bigText" id="hitokotoCategoryText">Quote Type</div>
+                                                <div class="infoText" id="hitokotoCategoryInfo">Filter quotes by category</div>
                                             </div>
-                                            <label class="switch">
-                                                <input id="newQuoteOnRefreshCheckbox" type="checkbox">
-                                                <span class="toggle"></span>
-                                            </label>
+                                            <select id="hitokotoCategorySelect" class="hitokotoSelect"></select>
+                                        </div>
+                                        <div class="ttcont" id="hitokotoIntervalToggle">
+                                            <div class="texts">
+                                                <div class="bigText" id="hitokotoIntervalText">Refresh Interval</div>
+                                                <div class="infoText" id="hitokotoIntervalInfo">How often to change the quote</div>
+                                            </div>
+                                            <select id="hitokotoIntervalSelect" class="hitokotoSelect"></select>
                                         </div>
                                     </div>
 
@@ -1805,39 +1808,8 @@
 
                                     <!-- LANGUAGE SELECTION OPTIONS -->
                                     <select class="languageSelector" id="languageSelector">
-                                        <option value="ar_SA">Arabic (العربية)</option>
-                                        <option value="az">Azerbaijani (Azərbaycanca)</option>
-                                        <option value="bn">Bangla (বাংলা)</option>
-                                        <option value="zh">Chinese (Simplified) (简体中文)</option>
-                                        <option value="zh_TW">Chinese (Traditional) (繁體中文)</option>
-                                        <option value="cs">Czech (Čeština)</option>
-                                        <option value="en">English (ENGLISH)</option>
-                                        <option value="fr">French (Français)</option>
-                                        <option value="de">German (Deutsch)</option>
-                                        <option value="el">Greek (Ελληνικά)</option>
-                                        <option value="hi">Hindi (हिन्दी)</option>
-                                        <option value="hu">Hungarian (Magyar)</option>
-                                        <option value="idn">Indonesian (Bahasa Indonesia)</option>
-                                        <option value="it">Italian (Italiano)</option>
-                                        <option value="ja">Japanese (日本語)</option>
-                                        <option value="ko">Korean (한국어)</option>
-                                        <option value="mr">Marathi (मराठी)</option>
-                                        <option value="ne">Nepali (नेपाली)</option>
-                                        <option value="fa">Persian (فارسی)</option>
-                                        <option value="pl">Polish (Polski)</option>
-                                        <option value="pt">Portuguese (Brazil) (Português)</option>
-                                        <option value="ru">Russian (Русский)</option>
-                                        <option value="sl">Slovenian (Slovenščina)</option>
-                                        <option value="es">Spanish (Español)</option>
-                                        <option value="sv">Swedish (Svenska)</option>
-                                        <option value="ta">Tamil (தமிழ்)</option>
-                                        <option value="th">Thai (ภาษาไทย)</option>
-                                        <option value="tr">Turkish (Türkçe)</option>
-                                        <option value="uk">Ukrainian (Українська)</option>
-                                        <option value="ur">Urdu (اردو)</option>
-                                        <option value="uz">Uzbek (O'zbek)</option>
-                                        <option value="vi">Vietnamese (Tiếng Việt)</option>
-                                        <!-- Place new language alphabetically -->
+                                        <option value="zh">中文 (简体)</option>
+                                        <option value="en">English</option>
                                     </select>
                                     <!-- end of languageSelector -->
                                 </div>
@@ -1915,21 +1887,66 @@
 
                     <!-- ----------end of tips----- -->
 
-                    <div id="menuCloseButton">
-                        <div class="icon">
-                            <svg id="closeBtnX" height="30px" viewBox="0 0 34 34" width="30px"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path id="menuCloseBtnIcon" class="accentColor"
-                                    d="m19.404 17 4.81-4.808a1.7 1.7 0 1 0-2.406-2.405L17 14.597l-4.808-4.81a1.7 1.7 0 1 0-2.405 2.405L14.597 17l-4.81 4.808a1.7 1.7 0 1 0 2.405 2.405L17 19.403l4.808 4.81a1.7 1.7 0 1 0 2.405-2.405L19.403 17ZM17 34C7.61 34 0 26.39 0 17S7.61 0 17 0s17 7.61 17 17-7.61 17-17 17Z" />
-                            </svg>
-                        </div>
-                        <!-- <span>Close</span> -->
-                    </div>
-                    <!-- ------------------ -->
-
-
                 </div>
-                <!-- end of page 1 -->
+                <!-- end of page 2 (settings) -->
+
+                <!-- Page 3–7: Sub-pages (about/projects/blog/contact/links) -->
+                <div class="page subPage" id="aboutPage" style="display: none;">
+                    <div class="topBar">
+                        <button class="pageBackButton" data-page="aboutPage">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M21 11H6.414l5.293-5.293l-1.414-1.414L2.586 12l7.707 7.707l1.414-1.414L6.414 13H21z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="pageTitle" id="aboutTitle">关于</div>
+                    <div class="subPageContent" id="aboutContent"></div>
+                </div>
+                <div class="page subPage" id="projectsPage" style="display: none;">
+                    <div class="topBar">
+                        <button class="pageBackButton" data-page="projectsPage">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M21 11H6.414l5.293-5.293l-1.414-1.414L2.586 12l7.707 7.707l1.414-1.414L6.414 13H21z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="pageTitle" id="projectsTitle">项目</div>
+                    <div class="subPageContent" id="projectsContent"></div>
+                </div>
+                <div class="page subPage" id="contactPage" style="display: none;">
+                    <div class="topBar">
+                        <button class="pageBackButton" data-page="contactPage">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M21 11H6.414l5.293-5.293l-1.414-1.414L2.586 12l7.707 7.707l1.414-1.414L6.414 13H21z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="pageTitle" id="contactTitle">联系</div>
+                    <div class="subPageContent" id="contactContent"></div>
+                </div>
+                <div class="page subPage" id="linksPage" style="display: none;">
+                    <div class="topBar">
+                        <button class="pageBackButton" data-page="linksPage">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M21 11H6.414l5.293-5.293l-1.414-1.414L2.586 12l7.707 7.707l1.414-1.414L6.414 13H21z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="pageTitle" id="linksTitle">个人链接</div>
+                    <div class="subPageContent" id="linksContent"></div>
+                </div>
+                <div class="page subPage" id="friendsPage" style="display: none;">
+                    <div class="topBar">
+                        <button class="pageBackButton" data-page="friendsPage">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                <path d="M21 11H6.414l5.293-5.293l-1.414-1.414L2.586 12l7.707 7.707l1.414-1.414L6.414 13H21z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="pageTitle" id="friendsTitle">友情链接</div>
+                    <div class="subPageContent" id="friendsContent"></div>
+                </div>
+
                 <div class="page" id="shortcutEditPage">
                     <div class="topBar">
                         <button id="backButton">
@@ -1957,13 +1974,26 @@
                         existing ones by clicking on the shortcut name or URL</div>
                     <div id="shortcutList"></div>
                 </div>
+
+                <!-- Floating close button (visible on all pages) -->
+                <div id="menuCloseButton">
+                    <div class="icon">
+                        <svg id="closeBtnX" height="30px" viewBox="0 0 34 34" width="30px"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path id="menuCloseBtnIcon" class="accentColor"
+                                d="m19.404 17 4.81-4.808a1.7 1.7 0 1 0-2.406-2.405L17 14.597l-4.808-4.81a1.7 1.7 0 1 0-2.405 2.405L14.597 17l-4.81 4.808a1.7 1.7 0 1 0 2.405 2.405L17 19.403l4.808 4.81a1.7 1.7 0 1 0 2.405-2.405L19.403 17ZM17 34C7.61 34 0 26.39 0 17S7.61 0 17 0s17 7.61 17 17-7.61 17-17 17Z" />
+                        </svg>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <!-- ------end of Menu-bar----------- -->
     <div id="menuButton"></div>
+
     <!-- ending-of-body -->
 
 </body>
 
 </html>
+

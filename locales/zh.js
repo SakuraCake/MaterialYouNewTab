@@ -15,15 +15,15 @@ const zh = {
     "editShortcutsListInfo": "点击“+”图标添加新快捷方式，或点击名称/URL编辑现有快捷方式",
     "adaptiveIconText": "自适应图标",
     "adaptiveIconInfoText": "快捷方式图标随主题变化",
-    "bookmarksText": "书签",
-    "bookmarksInfo": "显示书签侧边栏",
+    "bookmarksText": "个人链接",
+    "bookmarksInfo": "显示个人链接与友情链接",
     "ai_tools_button": "AI工具",
     "enable_ai_tools": "显示AI工具快捷方式",
     "aiToolsSettingsText": "AI工具设置",
     "aiToolsSettingsInfo": "管理AI工具快捷方式",
-    "googleAppsMenuText": "谷歌应用",
-    "googleAppsMenuInfo": "显示谷歌应用快捷方式",
-    "googleAppsHover": "谷歌应用",
+    "googleAppsMenuText": "社交链接",
+    "googleAppsMenuInfo": "显示社交媒体链接",
+    "googleAppsHover": "社交链接",
 
     // To-do List
     "todoListText": "待办事项",
@@ -42,8 +42,6 @@ const zh = {
     "greetinginfo": "在自定义文本下方显示问候语",
 
     // Misc
-    "userTextTitle": "自定义文本",
-    "userTextInfo": "在时钟下方显示自定义文本",
     "fahrenheitCelsiusCheckbox": "切换为华氏度",
     "fahrenheitCelsiusText": "刷新页面以应用更改",
     "hideWeatherTitle": "隐藏天气",
@@ -56,8 +54,29 @@ const zh = {
     "micIconInfo": "若语音输入无法使用",
     "hideSearchWith": "隐藏搜索引擎",
     "hideSearchWithInfo": "点击图标切换搜索引擎",
-    "motivationalQuotesText": "励志名言",
-    "motivationalQuotesInfo": "在搜索栏下方显示名言",
+    "motivationalQuotesText": "一言",
+    "motivationalQuotesInfo": "在搜索栏下方显示一言",
+    "hitokotoCategoryText": "一言类型",
+    "hitokotoCategoryInfo": "选择一言的随机范围",
+    "hitokotoIntervalText": "刷新间隔",
+    "hitokotoIntervalInfo": "多久更换一次一言",
+    "hitokotoTypeAll": "随机",
+    "hitokotoTypeA": "动画",
+    "hitokotoTypeB": "漫画",
+    "hitokotoTypeC": "游戏",
+    "hitokotoTypeD": "文学",
+    "hitokotoTypeE": "原创",
+    "hitokotoTypeF": "网络",
+    "hitokotoTypeG": "其他",
+    "hitokotoTypeH": "影视",
+    "hitokotoTypeI": "诗词",
+    "hitokotoTypeJ": "网易云",
+    "hitokotoTypeK": "哲学",
+    "hitokotoTypeL": "抖机灵",
+    "hitokotoIntervalLoad": "每次打开",
+    "hitokotoIntervalHourly": "每小时",
+    "hitokotoIntervalDaily": "每天",
+    "hitokotoIntervalWeekly": "每周",
     "search_suggestions_button": "搜索建议",
     "search_suggestions_text": "启用搜索建议",
 
@@ -112,7 +131,6 @@ const zh = {
     "listenPlaceholder": "聆听中...",
     "searchWithHint": "搜索方式",
     "searchOnHint": "搜索平台",
-    "userText": "点击编辑",
 
     // Greeting
     greeting: {
@@ -132,6 +150,7 @@ const zh = {
     "redditEngine": "Reddit",
     "wikipediaEngine": "维基百科",
     "quoraEngine": "Quora",
+    "articleEngine": "文章",
 
     // AI Tools
     "ai_tools": "AI工具",
